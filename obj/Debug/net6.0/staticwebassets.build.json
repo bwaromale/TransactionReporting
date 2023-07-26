@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "xqkuyvMjxsUawUlzFyeTQSu+FpuGGjNu3Zo6IEcfDYY=",
+  "Source": "TransactionReportingAPI",
+  "BasePath": "_content/TransactionReportingAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
