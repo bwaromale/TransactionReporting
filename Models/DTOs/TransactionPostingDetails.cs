@@ -10,5 +10,7 @@ namespace TransactionReportingAPI.Models.DTOs
         public string ReceiverRef { get; set; }
         
         public decimal Amount { get; set; }
+
+        
     }
 }

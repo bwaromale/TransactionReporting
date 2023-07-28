@@ -41,8 +41,32 @@ namespace TransactionReportingAPI.Controllers
                     _response.ErrorMessages.Add(forReceiverRefOk);
                     return _response;
                 }
+
+                bool isBalanceSufficient = VerifyAccountBalance(details.SenderRef, details.Amount);
+                if (!isBalanceSufficient)
+                {
+                    _response.IsSuccess = false;
+                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    _response.ErrorMessages.Add("Your balance is lower than the amount you are sending! Kindly top up your balance!");
+                    return _response;
+                }
+
+                //assign values to needed variables
+                var newTransaction = new Transaction();
+                newTransaction.Amount = details.Amount;
+                newTransaction.SenderRef = details.SenderRef;
+                newTransaction.ReceiverRef = details.ReceiverRef;
+                newTransaction.CreateDate = DateTime.Now;
+                newTransaction.IsCompleted = false;
+
+                //addtodb
+                _db.Transactions.Add(newTransaction);
+                _db.SaveChanges();
+
+
+
                 _response.StatusCode = HttpStatusCode.OK;
-                _response.Result = new Transaction { TransactionId = 1, Amount = 1234566789 };
+                _response.Result = newTransaction;
                 
             }
             catch (Exception ex) 
@@ -64,6 +88,17 @@ namespace TransactionReportingAPI.Controllers
             }
 
             return isExist;
+        }
+        private bool VerifyAccountBalance(string senderRef, decimal transAmount)
+        {
+            bool isSufficient = false;
+            var sender = _db.Customers.Where(s => s.CustomerRef == senderRef && s.Balance >= transAmount).FirstOrDefault();
+            if(sender != null)
+            {
+                isSufficient = true;
+            }
+
+            return isSufficient;
         }
     }
 }

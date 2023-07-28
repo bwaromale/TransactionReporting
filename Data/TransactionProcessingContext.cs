@@ -12,5 +12,11 @@ namespace TransactionReportingAPI.Data
 
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Customer> Customers { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Customer>()
+                .HasIndex(c => c.CustomerRef)
+                .IsUnique();
+        }
     }
 }
