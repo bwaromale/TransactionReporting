@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\TransactionProcessing.Server.props" />
+</Project>
