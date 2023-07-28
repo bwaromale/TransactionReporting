@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "bqZeY3d4fLUDONqvfraFPv4Xc4TPnXTPgjiGNjCy9eVd/tD2F4ws3aeXwVA6+kXq5UfLaWPtVRNGFYEwufw7Qg==",
+  "dgSpecHash": "YnEOWjF8+YaWf2C23uz0DVhx5M0qUvVMkTbYYB34XVTfuwkqfy8+HkDUYNg7My+K+nHdLMSQNv8C05vg98Abcg==",
   "success": true,
   "projectFilePath": "C:\\Users\\Lucky Paul\\Documents\\C#\\TransactionReporting\\TransactionReportingAPI.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Lucky Paul\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\Lucky Paul\\.nuget\\packages\\google.protobuf\\3.23.4\\google.protobuf.3.23.4.nupkg.sha512",
     "C:\\Users\\Lucky Paul\\.nuget\\packages\\grpc.aspnetcore\\2.55.0\\grpc.aspnetcore.2.55.0.nupkg.sha512",
     "C:\\Users\\Lucky Paul\\.nuget\\packages\\grpc.aspnetcore.server\\2.55.0\\grpc.aspnetcore.server.2.55.0.nupkg.sha512",
@@ -14,7 +15,7 @@
     "C:\\Users\\Lucky Paul\\.nuget\\packages\\grpc.net.common\\2.55.0\\grpc.net.common.2.55.0.nupkg.sha512",
     "C:\\Users\\Lucky Paul\\.nuget\\packages\\grpc.tools\\2.55.1\\grpc.tools.2.55.1.nupkg.sha512",
     "C:\\Users\\Lucky Paul\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
-    "C:\\Users\\Lucky Paul\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
+    "C:\\Users\\Lucky Paul\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\Lucky Paul\\.nuget\\packages\\microsoft.data.sqlclient\\2.1.4\\microsoft.data.sqlclient.2.1.4.nupkg.sha512",
     "C:\\Users\\Lucky Paul\\.nuget\\packages\\microsoft.data.sqlclient.sni.runtime\\2.1.1\\microsoft.data.sqlclient.sni.runtime.2.1.1.nupkg.sha512",
     "C:\\Users\\Lucky Paul\\.nuget\\packages\\microsoft.entityframeworkcore\\6.0.15\\microsoft.entityframeworkcore.6.0.15.nupkg.sha512",

@@ -8,6 +8,7 @@ namespace TransactionReportingAPI.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CustomerId { get; set; }
+        public string CustomerRef { get; set; }
         public string CustomerName { get; set; }
         public decimal Balance { get; set; }
     }
