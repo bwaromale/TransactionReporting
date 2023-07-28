@@ -8,9 +8,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionReportingAPI", "
 		{744D6FB6-909D-47DA-868F-CC42BA09A9BB} = {744D6FB6-909D-47DA-868F-CC42BA09A9BB}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionProcessing.Server", "TransactionProcessing.Server\TransactionProcessing.Server.csproj", "{744D6FB6-909D-47DA-868F-CC42BA09A9BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionProcessing.Server", "TransactionProcessing.Server\TransactionProcessing.Server.csproj", "{744D6FB6-909D-47DA-868F-CC42BA09A9BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionProcessing.Client", "TransactionProcessing.Client\TransactionProcessing.Client.csproj", "{B7130F3C-DED8-4510-86ED-4975B8F2DA32}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionProcessing.Client", "TransactionProcessing.Client\TransactionProcessing.Client.csproj", "{B7130F3C-DED8-4510-86ED-4975B8F2DA32}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

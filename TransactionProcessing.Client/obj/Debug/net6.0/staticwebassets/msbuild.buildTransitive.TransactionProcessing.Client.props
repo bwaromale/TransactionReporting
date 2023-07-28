@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\buildMultiTargeting\TransactionProcessing.Client.props" />
-</Project>

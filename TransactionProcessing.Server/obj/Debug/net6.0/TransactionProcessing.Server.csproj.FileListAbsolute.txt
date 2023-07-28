@@ -1,3 +1,5 @@
+C:\Users\Lucky Paul\Documents\C#\TransactionReporting\TransactionProcessing.Server\obj\Debug\net6.0\TransactionProcessing.Server.csproj.AssemblyReference.cache
+C:\Users\Lucky Paul\Documents\C#\TransactionReporting\TransactionProcessing.Server\obj\Debug\net6.0\TransactionProcessing.Server.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\Lucky Paul\Documents\C#\TransactionReporting\TransactionProcessing.Server\bin\Debug\net6.0\appsettings.Development.json
 C:\Users\Lucky Paul\Documents\C#\TransactionReporting\TransactionProcessing.Server\bin\Debug\net6.0\appsettings.json
 C:\Users\Lucky Paul\Documents\C#\TransactionReporting\TransactionProcessing.Server\bin\Debug\net6.0\TransactionProcessing.Server.exe
@@ -12,8 +14,6 @@ C:\Users\Lucky Paul\Documents\C#\TransactionReporting\TransactionProcessing.Serv
 C:\Users\Lucky Paul\Documents\C#\TransactionReporting\TransactionProcessing.Server\bin\Debug\net6.0\Grpc.Net.Client.dll
 C:\Users\Lucky Paul\Documents\C#\TransactionReporting\TransactionProcessing.Server\bin\Debug\net6.0\Grpc.Net.ClientFactory.dll
 C:\Users\Lucky Paul\Documents\C#\TransactionReporting\TransactionProcessing.Server\bin\Debug\net6.0\Grpc.Net.Common.dll
-C:\Users\Lucky Paul\Documents\C#\TransactionReporting\TransactionProcessing.Server\obj\Debug\net6.0\TransactionProcessing.Server.csproj.AssemblyReference.cache
-C:\Users\Lucky Paul\Documents\C#\TransactionReporting\TransactionProcessing.Server\obj\Debug\net6.0\TransactionProcessing.Server.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\Lucky Paul\Documents\C#\TransactionReporting\TransactionProcessing.Server\obj\Debug\net6.0\TransactionProcessing.Server.AssemblyInfoInputs.cache
 C:\Users\Lucky Paul\Documents\C#\TransactionReporting\TransactionProcessing.Server\obj\Debug\net6.0\TransactionProcessing.Server.AssemblyInfo.cs
 C:\Users\Lucky Paul\Documents\C#\TransactionReporting\TransactionProcessing.Server\obj\Debug\net6.0\TransactionProcessing.Server.csproj.CoreCompileInputs.cache
@@ -32,3 +32,8 @@ C:\Users\Lucky Paul\Documents\C#\TransactionReporting\TransactionProcessing.Serv
 C:\Users\Lucky Paul\Documents\C#\TransactionReporting\TransactionProcessing.Server\obj\Debug\net6.0\TransactionProcessing.Server.pdb
 C:\Users\Lucky Paul\Documents\C#\TransactionReporting\TransactionProcessing.Server\obj\Debug\net6.0\TransactionProcessing.Server.genruntimeconfig.cache
 C:\Users\Lucky Paul\Documents\C#\TransactionReporting\TransactionProcessing.Server\obj\Debug\net6.0\ref\TransactionProcessing.Server.dll
+C:\Users\Lucky Paul\Documents\C#\TransactionReporting\TransactionProcessing.Server\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\Lucky Paul\Documents\C#\TransactionReporting\TransactionProcessing.Server\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\Lucky Paul\Documents\C#\TransactionReporting\TransactionProcessing.Server\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\Lucky Paul\Documents\C#\TransactionReporting\TransactionProcessing.Server\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\Lucky Paul\Documents\C#\TransactionReporting\TransactionProcessing.Server\bin\Debug\net6.0\System.Diagnostics.DiagnosticSource.dll

@@ -1,0 +1,3 @@
+obj\Debug\net6.0\Protos/SpoolPendingTransactions.cs \
+obj\Debug\net6.0\Protos/SpoolPendingTransactionsGrpc.cs: C:/Users/Lucky Paul/.nuget/packages/grpc.tools/2.55.1/build/native/include/google/protobuf/timestamp.proto\
+ Protos/SpoolPendingTransactions.proto

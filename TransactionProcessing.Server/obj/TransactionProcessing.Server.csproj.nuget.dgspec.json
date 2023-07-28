@@ -48,6 +48,10 @@
             "Grpc.AspNetCore": {
               "target": "Package",
               "version": "[2.55.0, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.15, )"
             }
           },
           "imports": [
