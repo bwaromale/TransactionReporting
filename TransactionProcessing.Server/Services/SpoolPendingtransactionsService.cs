@@ -23,7 +23,7 @@ namespace TransactionProcessing.Server.Services
         {
             try
             {
-                var transactions = _dbContext.Transactions.AsAsyncEnumerable();
+                var transactions = _dbContext.Transactions.Where(t => t.IsCompleted == false).AsAsyncEnumerable();
                 await foreach (ModelTransaction transaction in transactions)
                 {
                     var response = MapTransactionToProto(transaction);
