@@ -150,7 +150,7 @@
           }
         }
       },
-      "Grpc.Tools/2.55.1": {
+      "Grpc.Tools/2.56.2": {
         "type": "package",
         "build": {
           "build/Grpc.Tools.props": {},
@@ -1267,10 +1267,10 @@
         "packageIcon.png"
       ]
     },
-    "Grpc.Tools/2.55.1": {
-      "sha512": "sTlugBQLmPY7Tw7IMygI2xZSny0+4PZ2JgBTyJ1/gBI+8xXrqnQIgRBK0dVxhYVPWyqhh5RLUdMOVVz64uVfCQ==",
+    "Grpc.Tools/2.56.2": {
+      "sha512": "6tiFfJWzgTMPNCEB+0MRFhQy2HJHFie9LQOiOZCJoOIjseQvRNoI9vAUEKW3xbJlGcz4TVUooWFWIf0INHoqMg==",
       "type": "package",
-      "path": "grpc.tools/2.55.1",
+      "path": "grpc.tools/2.56.2",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
@@ -1300,7 +1300,7 @@
         "build/native/include/google/protobuf/timestamp.proto",
         "build/native/include/google/protobuf/type.proto",
         "build/native/include/google/protobuf/wrappers.proto",
-        "grpc.tools.2.55.1.nupkg.sha512",
+        "grpc.tools.2.56.2.nupkg.sha512",
         "grpc.tools.nuspec",
         "packageIcon.png",
         "tools/linux_arm64/grpc_csharp_plugin",
@@ -2918,6 +2918,8 @@
       "Google.Protobuf >= 3.23.4",
       "Grpc.AspNetCore >= 2.55.0",
       "Grpc.Core.Api >= 2.55.0",
+      "Grpc.Net.Client >= 2.55.0",
+      "Grpc.Tools >= 2.56.2",
       "Microsoft.EntityFrameworkCore >= 6.0.15",
       "Microsoft.EntityFrameworkCore.Relational >= 6.0.15",
       "Microsoft.EntityFrameworkCore.SqlServer >= 6.0.15",
@@ -2980,6 +2982,16 @@
           "Grpc.Core.Api": {
             "target": "Package",
             "version": "[2.55.0, )"
+          },
+          "Grpc.Net.Client": {
+            "target": "Package",
+            "version": "[2.55.0, )"
+          },
+          "Grpc.Tools": {
+            "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+            "suppressParent": "All",
+            "target": "Package",
+            "version": "[2.56.2, )"
           },
           "Microsoft.EntityFrameworkCore": {
             "target": "Package",

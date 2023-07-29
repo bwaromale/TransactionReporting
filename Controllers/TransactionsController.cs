@@ -1,9 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Grpc.Core;
+using Grpc.Net.Client;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using TransactionProcessing.Server.Protos;
 using TransactionReportingAPI.Data;
 using TransactionReportingAPI.Models;
 using TransactionReportingAPI.Models.DTOs;
+using Transaction = TransactionReportingAPI.Models.Transaction;
 
 namespace TransactionReportingAPI.Controllers
 {
@@ -12,10 +16,35 @@ namespace TransactionReportingAPI.Controllers
     public class TransactionsController : ControllerBase
     {
         private readonly TransactionProcessingContext _db;
+        private readonly SpoolPendingTransactions.SpoolPendingTransactionsClient _grpcClient;
         protected APIResponse _response = new APIResponse();
         public TransactionsController(TransactionProcessingContext db)
         {
              _db = db;
+            GrpcChannel channel = GrpcChannel.ForAddress("https://localhost:7105");
+            _grpcClient = new SpoolPendingTransactions.SpoolPendingTransactionsClient(channel);
+        }
+        [HttpGet]
+        public async Task<ActionResult<APIResponse>> GetPendingTransactions()
+        {
+            List<Transaction> transactions = new List<Transaction>();
+            var input = new PendingTransactionsRequest();
+            var respFrmGrpc = _grpcClient.FetchTransactions(input);
+            
+            await foreach (var streamedTransaction in respFrmGrpc.ResponseStream.ReadAllAsync())
+            {
+                Transaction transaction = new Transaction();
+                transaction.TransactionId = streamedTransaction.TransactionId;
+                transaction.SenderRef = streamedTransaction.SenderRef;
+                transaction.ReceiverRef = streamedTransaction.ReceiverRef;
+                transaction.Amount = streamedTransaction.Amount;
+                transaction.CreateDate = streamedTransaction.CreateDate.ToDateTime();
+                transactions.Add(transaction);
+            }
+            
+            _response.StatusCode = HttpStatusCode.OK;
+            _response.Result = transactions;
+            return _response;
         }
         [HttpPost]
         public ActionResult<APIResponse> PostTransaction(TransactionPostingDetails details)

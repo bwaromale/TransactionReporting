@@ -1,5 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using TransactionProcessing.Server.Services;
-using TransactionProcessing.Services;
+using TransactionReportingAPI.Data;
 
 namespace TransactionProcessing
 {
@@ -14,7 +15,12 @@ namespace TransactionProcessing
 
             // Add services to the container.
             builder.Services.AddGrpc();
-
+            builder.Services.AddDbContext<TransactionProcessingContext>(
+                option
+                => {
+                    option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultSQLConnection"));
+                }
+                );
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

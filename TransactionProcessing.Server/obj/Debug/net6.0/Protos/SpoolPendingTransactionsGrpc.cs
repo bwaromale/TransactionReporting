@@ -48,15 +48,15 @@ namespace TransactionProcessing.Server.Protos {
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::TransactionProcessing.Server.Protos.PendingTransactionsRequest> __Marshaller_PendingTransactionsRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::TransactionProcessing.Server.Protos.PendingTransactionsRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::TransactionProcessing.Server.Protos.Transactions> __Marshaller_Transactions = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::TransactionProcessing.Server.Protos.Transactions.Parser));
+    static readonly grpc::Marshaller<global::TransactionProcessing.Server.Protos.Transaction> __Marshaller_Transaction = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::TransactionProcessing.Server.Protos.Transaction.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Method<global::TransactionProcessing.Server.Protos.PendingTransactionsRequest, global::TransactionProcessing.Server.Protos.Transactions> __Method_FetchTransactions = new grpc::Method<global::TransactionProcessing.Server.Protos.PendingTransactionsRequest, global::TransactionProcessing.Server.Protos.Transactions>(
+    static readonly grpc::Method<global::TransactionProcessing.Server.Protos.PendingTransactionsRequest, global::TransactionProcessing.Server.Protos.Transaction> __Method_FetchTransactions = new grpc::Method<global::TransactionProcessing.Server.Protos.PendingTransactionsRequest, global::TransactionProcessing.Server.Protos.Transaction>(
         grpc::MethodType.ServerStreaming,
         __ServiceName,
         "FetchTransactions",
         __Marshaller_PendingTransactionsRequest,
-        __Marshaller_Transactions);
+        __Marshaller_Transaction);
 
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
@@ -69,7 +69,7 @@ namespace TransactionProcessing.Server.Protos {
     public abstract partial class SpoolPendingTransactionsBase
     {
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::System.Threading.Tasks.Task FetchTransactions(global::TransactionProcessing.Server.Protos.PendingTransactionsRequest request, grpc::IServerStreamWriter<global::TransactionProcessing.Server.Protos.Transactions> responseStream, grpc::ServerCallContext context)
+      public virtual global::System.Threading.Tasks.Task FetchTransactions(global::TransactionProcessing.Server.Protos.PendingTransactionsRequest request, grpc::IServerStreamWriter<global::TransactionProcessing.Server.Protos.Transaction> responseStream, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -92,7 +92,7 @@ namespace TransactionProcessing.Server.Protos {
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     public static void BindService(grpc::ServiceBinderBase serviceBinder, SpoolPendingTransactionsBase serviceImpl)
     {
-      serviceBinder.AddMethod(__Method_FetchTransactions, serviceImpl == null ? null : new grpc::ServerStreamingServerMethod<global::TransactionProcessing.Server.Protos.PendingTransactionsRequest, global::TransactionProcessing.Server.Protos.Transactions>(serviceImpl.FetchTransactions));
+      serviceBinder.AddMethod(__Method_FetchTransactions, serviceImpl == null ? null : new grpc::ServerStreamingServerMethod<global::TransactionProcessing.Server.Protos.PendingTransactionsRequest, global::TransactionProcessing.Server.Protos.Transaction>(serviceImpl.FetchTransactions));
     }
 
   }

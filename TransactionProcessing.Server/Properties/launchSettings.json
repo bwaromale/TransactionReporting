@@ -9,5 +9,34 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     }
+  },
+  {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Debug gRPC Server",
+        "type": "coreclr",
+        "request": "launch",
+        "preLaunchTask": "build",
+        "program": "C:\\Users\\Lucky Paul\\Documents\\C#\\TransactionReporting\\TransactionProcessing.Server\\bin\\Debug\\net6.0\\TransactionProcessing.Server.dll",
+        "args": [],
+        "cwd": "${workspaceFolder}",
+        "stopAtEntry": false,
+        "serverReadyAction": {
+          "action": "openExternally",
+          "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+        },
+        "sourceFileMap": {
+          "/Views": "${workspaceFolder}/Views"
+        },
+        "pipeTransport": {
+          "pipeCwd": "${workspaceFolder}",
+          "pipeProgram": "dotnet",
+          "pipeArgs": [ "exec", "--runtimeconfig", "C:\\Users\\Lucky Paul\\Documents\\C#\\TransactionReporting\\TransactionProcessing.Server\\bin\\Debug\\net6.0\\TransactionProcessing.runtimeconfig.json", "--depsfile", "C:\\Users\\Lucky Paul\\Documents\\C#\\TransactionReporting\\TransactionProcessing.Server\\bin\\Debug\\net6.0\\TransactionProcessing.deps.json" ],
+          "debuggerPath": "/path/to/vsdbg"
+        }
+      }
+    ]
   }
+
 }
