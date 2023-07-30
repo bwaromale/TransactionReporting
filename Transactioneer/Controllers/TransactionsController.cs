@@ -51,5 +51,9 @@ namespace Transactioneer.Controllers
             }
             return View();
         }
+        public IActionResult TransactionsReport()
+        {
+            return View();
+        }
     }
 }

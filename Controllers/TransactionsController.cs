@@ -2,7 +2,9 @@
 using Grpc.Net.Client;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Net;
+using System.Text;
 using TransactionProcessing.Server.Protos;
 using TransactionReportingAPI.Data;
 using TransactionReportingAPI.Models;
@@ -44,6 +46,37 @@ namespace TransactionReportingAPI.Controllers
             
             _response.StatusCode = HttpStatusCode.OK;
             _response.Result = transactions;
+            return _response;
+        }
+        [HttpGet]
+        public async Task<ActionResult<APIResponse>> GetTransactionsReport()
+        {
+            var allTransactionsReport = _db.Transactions
+                                    .Select(b => new
+                                    {
+                                        b.TransactionId,
+                                        SenderName = _db.Customers
+                                            .Where(c => c.CustomerRef == b.SenderRef)
+                                            .Select(c => c.CustomerName)
+                                            .FirstOrDefault(),
+                                        b.SenderRef,
+                                        ReceiverName = _db.Customers
+                                            .Where(c => c.CustomerRef == b.ReceiverRef)
+                                            .Select(c => c.CustomerName)
+                                            .FirstOrDefault(),
+                                        b.ReceiverRef,
+                                        b.Amount,
+                                        PostedOn = b.CreateDate,
+                                        ProcessedOn = b.ProcessedDate,
+                                        Completed = b.IsCompleted
+                                    })
+                                    .OrderBy(b => b.TransactionId)
+                                    .ToList();
+
+
+
+            _response.StatusCode = HttpStatusCode.OK;
+            _response.Result = allTransactionsReport;
             return _response;
         }
         [HttpPost]

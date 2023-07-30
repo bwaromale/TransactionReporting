@@ -25,4 +25,13 @@
         public Transaction Result { get; set; }
 
     }
+    public class TransactionReport
+    {
+        public string SenderRef { get; set; }
+        public string ReceiverRef { get; set; }
+        public decimal Amount { get; set; }
+        public bool isCompleted { get; set; }
+        public DateTime CreateDate { get; set; }
+        public DateTime ProcessedDate { get; set; }
+    }
 }

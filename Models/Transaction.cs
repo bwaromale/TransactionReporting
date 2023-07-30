@@ -16,4 +16,5 @@ namespace TransactionReportingAPI.Models
         public DateTime ProcessedDate { get; set; }
 
     }
+    
 }
