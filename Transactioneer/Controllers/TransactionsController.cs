@@ -7,6 +7,57 @@ namespace Transactioneer.Controllers
     public class TransactionsController : Controller
     {
         private string baseUrl = "https://localhost:7021/api/Transactions/";
+        public IActionResult TopUpCustomerBalance()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult TopUpCustomerBalance(TopUpCustomerRequest topUpDetails)
+        {
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(baseUrl);
+                    client.DefaultRequestHeaders.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                    
+                    HttpResponseMessage res = client.PostAsJsonAsync(baseUrl + "TopUpBalance", topUpDetails).Result;
+                   
+
+                    if (res.IsSuccessStatusCode)
+                    {
+                        var result = res.Content.ReadAsStringAsync().Result;
+                        TopUpCustomerResponse topUpCustomerResponse = JsonConvert.DeserializeObject<TopUpCustomerResponse>(result);
+                        if (topUpCustomerResponse.IsSuccess)
+                        {
+                            ViewBag.msg = topUpCustomerResponse.Result;
+                            ModelState.Clear();
+                        }
+                        else
+                        {
+                            
+
+                            string[] errors = topUpCustomerResponse.ErrorMessages;
+                            string errorsMappedToString = errors.Aggregate((current, next) => current + " " + next);
+
+                            ViewBag.msg = errorsMappedToString;
+                            
+                        }
+                    }
+                    else
+                    {
+
+                        ViewBag.msg = "Top Up failed! Contact Support";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.msg = ex.Message;
+            }
+            return View();
+        }
         public IActionResult PostTransaction()
         {
             return View();

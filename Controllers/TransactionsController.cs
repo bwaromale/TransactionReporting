@@ -22,7 +22,7 @@ namespace TransactionReportingAPI.Controllers
         protected APIResponse _response = new APIResponse();
         public TransactionsController(TransactionProcessingContext db)
         {
-             _db = db;
+            _db = db;
             GrpcChannel channel = GrpcChannel.ForAddress("https://localhost:7105");
             _grpcClient = new SpoolPendingTransactions.SpoolPendingTransactionsClient(channel);
         }
@@ -32,7 +32,7 @@ namespace TransactionReportingAPI.Controllers
             List<Transaction> transactions = new List<Transaction>();
             var input = new PendingTransactionsRequest();
             var respFrmGrpc = _grpcClient.FetchTransactions(input);
-            
+
             await foreach (var streamedTransaction in respFrmGrpc.ResponseStream.ReadAllAsync())
             {
                 Transaction transaction = new Transaction();
@@ -43,7 +43,7 @@ namespace TransactionReportingAPI.Controllers
                 transaction.CreateDate = streamedTransaction.CreateDate.ToDateTime();
                 transactions.Add(transaction);
             }
-            
+
             _response.StatusCode = HttpStatusCode.OK;
             _response.Result = transactions;
             return _response;
@@ -80,9 +80,9 @@ namespace TransactionReportingAPI.Controllers
             return _response;
         }
         [HttpPost]
-        public ActionResult<APIResponse> TopUpBalance(string customerRef, decimal amount)
+        public ActionResult<APIResponse> TopUpBalance(TopUpCustomerRequest topUpDetails)
         {
-            if (customerRef == null || amount == 0)
+            if (topUpDetails.CustomerRef == null || topUpDetails.Amount == 0)
             {
                 _response.IsSuccess = false;
                 _response.StatusCode = HttpStatusCode.BadRequest;
@@ -90,17 +90,17 @@ namespace TransactionReportingAPI.Controllers
                 return _response;
             }
 
-            bool customerExist = VerifyReference(customerRef);
+            bool customerExist = VerifyReference(topUpDetails.CustomerRef);
             if (!customerExist)
             {
                 _response.IsSuccess = false;
                 _response.StatusCode = HttpStatusCode.NotFound;
-                _response.ErrorMessages.Add("Customer reference is invalid");
+                _response.ErrorMessages.Add($"Customer reference '{topUpDetails.CustomerRef}' provided for Top Up  is invalid");
                 return _response;
             }
 
-            Customer customer = _db.Customers.Where(c=>c.CustomerRef == customerRef).FirstOrDefault();
-            decimal newBalance = customer.Balance + amount;
+            Customer customer = _db.Customers.Where(c=>c.CustomerRef == topUpDetails.CustomerRef).FirstOrDefault();
+            decimal newBalance = customer.Balance + topUpDetails.Amount;
             customer.Balance = newBalance;
             _db.Update(customer);
             int updateBalance = _db.SaveChanges();
@@ -112,7 +112,7 @@ namespace TransactionReportingAPI.Controllers
                 return _response;
             }
             _response.StatusCode = HttpStatusCode.OK;
-            _response.Result = $"Top up sucessful!";
+            _response.Result = "Top up sucessful!";
             return _response;
         }
         [HttpPost]

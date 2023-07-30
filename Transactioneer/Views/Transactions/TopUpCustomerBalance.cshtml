@@ -1,0 +1,46 @@
+﻿@model Transactioneer.Models.TopUpCustomerRequest
+
+@{
+    ViewData["Title"] = "TopUpCustomerBalance";
+}
+@{
+    try
+    {
+        if (ViewBag.msg != null)
+        {
+            <label>@ViewBag.msg</label>
+        }
+    }
+    catch { }
+}
+<h1>Top Up Customer</h1>
+<hr />
+
+<div class="d-flex justify-content-center  align-items-center">
+    <div class="row">
+        <div class="col-md-12">
+            <form asp-action="TopUpCustomerBalance">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="CustomerRef" class="control-label">Customer Reference</label>
+                    <input asp-for="CustomerRef" class="form-control" />
+                    <span asp-validation-for="CustomerRef" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Amount" class="control-label">Amount</label>
+                    <input asp-for="Amount" class="form-control" />
+                    <span asp-validation-for="Amount" class="text-danger"></span>
+                </div>
+                <br />
+                <div class="form-group">
+                    <input type="submit" value="Top Up" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

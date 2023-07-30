@@ -44,4 +44,16 @@
         public string[] ErrorMessages { get; set; }
         public TransactionReport[] Result { get; set; }
     }
+    public class TopUpCustomerRequest
+    {
+        public string CustomerRef { get; set; }
+        public decimal Amount { get; set; }
+    }
+    public class TopUpCustomerResponse
+    {
+        public int StatusCode { get; set; }
+        public bool IsSuccess { get; set; }
+        public string[] ErrorMessages { get; set; }
+        public string Result { get; set; }
+    }
 }
