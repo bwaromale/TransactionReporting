@@ -47,6 +47,42 @@ namespace TransactionReportingAPI.Controllers
             return _response;
         }
         [HttpPost]
+        public ActionResult<APIResponse> TopUpBalance(string customerRef, decimal amount)
+        {
+            if (customerRef == null || amount == 0)
+            {
+                _response.IsSuccess = false;
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.ErrorMessages.Add("Invalid top up request. Review details!");
+                return _response;
+            }
+
+            bool customerExist = VerifyReference(customerRef);
+            if (!customerExist)
+            {
+                _response.IsSuccess = false;
+                _response.StatusCode = HttpStatusCode.NotFound;
+                _response.ErrorMessages.Add("Customer reference is invalid");
+                return _response;
+            }
+
+            Customer customer = _db.Customers.Where(c=>c.CustomerRef == customerRef).FirstOrDefault();
+            decimal newBalance = customer.Balance + amount;
+            customer.Balance = newBalance;
+            _db.Update(customer);
+            int updateBalance = _db.SaveChanges();
+            if(updateBalance != 1)
+            {
+                _response.IsSuccess = false;
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.ErrorMessages.Add($"Error: Couldn't update balance to {customer.Balance}. Contact Support");
+                return _response;
+            }
+            _response.StatusCode = HttpStatusCode.OK;
+            _response.Result = $"Top up sucessful!";
+            return _response;
+        }
+        [HttpPost]
         public ActionResult<APIResponse> PostTransaction(TransactionPostingDetails details)
         {
             try
