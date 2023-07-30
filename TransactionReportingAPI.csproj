@@ -8,18 +8,22 @@
 
   <ItemGroup>
     <Compile Remove="TransactioneerView\**" />
+    <Compile Remove="Transactioneer\**" />
     <Compile Remove="TransactionProcessing.Client\**" />
     <Compile Remove="TransactionProcessing.Server\**" />
     <Compile Remove="TransactionProcessingService\**" />
     <Content Remove="TransactioneerView\**" />
+    <Content Remove="Transactioneer\**" />
     <Content Remove="TransactionProcessing.Client\**" />
     <Content Remove="TransactionProcessing.Server\**" />
     <Content Remove="TransactionProcessingService\**" />
     <EmbeddedResource Remove="TransactioneerView\**" />
+    <EmbeddedResource Remove="Transactioneer\**" />
     <EmbeddedResource Remove="TransactionProcessing.Client\**" />
     <EmbeddedResource Remove="TransactionProcessing.Server\**" />
     <EmbeddedResource Remove="TransactionProcessingService\**" />
     <None Remove="TransactioneerView\**" />
+    <None Remove="Transactioneer\**" />
     <None Remove="TransactionProcessing.Client\**" />
     <None Remove="TransactionProcessing.Server\**" />
     <None Remove="TransactionProcessingService\**" />
