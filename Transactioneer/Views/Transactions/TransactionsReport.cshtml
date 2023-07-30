@@ -7,37 +7,56 @@
 <h1>TransactionsReport</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="PostTransaction">Post Transaction</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.SenderRef)
+                Transaction Id
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ReceiverRef)
+                Sender Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Amount)
+                Sender Reference
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.isCompleted)
+                Receiver Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CreateDate)
+                Receiver Reference
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ProcessedDate)
+                Amount
+            </th>
+            <th>
+                Posted On
+            </th>
+            <th>
+                Processed On
+            </th>
+            <th>
+                Completed
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model) 
+{
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.TransactionId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SenderName)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.SenderRef)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReceiverName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ReceiverRef)
@@ -46,18 +65,13 @@
                 @Html.DisplayFor(modelItem => item.Amount)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.isCompleted)
+                @Html.DisplayFor(modelItem => item.PostedOn)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CreateDate)
+                @Html.DisplayFor(modelItem => item.ProcessedOn)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ProcessedDate)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.DisplayFor(modelItem => item.Completed)
             </td>
         </tr>
 }

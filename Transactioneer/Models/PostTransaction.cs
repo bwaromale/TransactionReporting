@@ -27,11 +27,21 @@
     }
     public class TransactionReport
     {
+        public int TransactionId { get; set; }
+        public string SenderName { get; set; }
         public string SenderRef { get; set; }
+        public string ReceiverName { get; set; }
         public string ReceiverRef { get; set; }
         public decimal Amount { get; set; }
-        public bool isCompleted { get; set; }
-        public DateTime CreateDate { get; set; }
-        public DateTime ProcessedDate { get; set; }
+        public DateTime PostedOn { get; set; }
+        public DateTime ProcessedOn { get; set; }
+        public bool Completed { get; set; }
+    }
+    public class TransactionsReportResponse
+    {
+        public int StatusCode { get; set; }
+        public bool IsSuccess { get; set; }
+        public string[] ErrorMessages { get; set; }
+        public TransactionReport[] Result { get; set; }
     }
 }
