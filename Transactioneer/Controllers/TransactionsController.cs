@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Text;
 using Transactioneer.Models;
 
 namespace Transactioneer.Controllers
@@ -39,8 +40,14 @@ namespace Transactioneer.Controllers
                             
 
                             string[] errors = topUpCustomerResponse.ErrorMessages;
-                            string errorsMappedToString = errors.Aggregate((current, next) => current + " " + next);
-
+                            StringBuilder sb = new StringBuilder();
+                            foreach(string  error in errors)
+                            {
+                                sb.Append(error);
+                                sb.Append(" ");
+                            }
+                            //string errorsMappedToString = errors.Aggregate((current, next) => current + " " + next);
+                            string errorsMappedToString = sb.ToString();
                             ViewBag.msg = errorsMappedToString;
                             
                         }

@@ -1,8 +1,37 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-
+<style>
+    button {
+        height: 150px;
+        font-family:'Arial Rounded MT';
+    }
+</style>
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Welcome to Transactioneer</h1>
+    <p>The Best Transaction Platform in the World!</p>
+    
+</div>
+<div class="row mt-5 p-5">
+    <div class="col-md-4 d-flex justify-content-center align-items-center">
+        <a asp-controller="Transactions" asp-action="TopUpCustomerBalance">
+            <button type="button" class="btn btn-lg btn-outline-primary">
+                Top Up Customer
+            </button>
+        </a>
+    </div>
+    <div class="col-md-4 d-flex  justify-content-center align-items-center">
+        <a asp-controller="Transactions" asp-action="PostTransaction">
+            <button type="button" class="btn btn-lg btn-outline-success">
+                Post Transaction
+            </button>
+        </a>
+    </div>
+    <div class="col-md-4 d-flex justify-content-center align-items-center">
+        <a asp-controller="Transactions" asp-action="TransactionsReport">
+            <button type="button" class="btn btn-lg btn-outline-info ">
+                Transactions Report
+            </button>
+        </a>
+    </div>
 </div>
