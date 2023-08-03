@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Text;
 using Transactioneer.Models;
@@ -7,7 +8,12 @@ namespace Transactioneer.Controllers
 {
     public class TransactionsController : Controller
     {
-        private string baseUrl = "https://localhost:7021/api/Transactions/";
+        private readonly TransactionReportingAPIUrls _baseUrl;
+
+        public TransactionsController(IOptions<TransactionReportingAPIUrls> baseUrl)
+        {
+            _baseUrl = baseUrl.Value;
+        }
         public IActionResult TopUpCustomerBalance()
         {
             return View();
@@ -19,12 +25,11 @@ namespace Transactioneer.Controllers
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    client.BaseAddress = new Uri(baseUrl);
+                    client.BaseAddress = _baseUrl.TransactionsBaseUrl;
                     client.DefaultRequestHeaders.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                     
-                    HttpResponseMessage res = client.PostAsJsonAsync(baseUrl + "TopUpBalance", topUpDetails).Result;
-                   
+                    HttpResponseMessage res = client.PostAsJsonAsync(client.BaseAddress + "TopUpBalance", topUpDetails).Result;
 
                     if (res.IsSuccessStatusCode)
                     {
@@ -37,8 +42,6 @@ namespace Transactioneer.Controllers
                         }
                         else
                         {
-                            
-
                             string[] errors = topUpCustomerResponse.ErrorMessages;
                             StringBuilder sb = new StringBuilder();
                             foreach(string  error in errors)
@@ -46,15 +49,13 @@ namespace Transactioneer.Controllers
                                 sb.Append(error);
                                 sb.Append(" ");
                             }
-                            //string errorsMappedToString = errors.Aggregate((current, next) => current + " " + next);
-                            string errorsMappedToString = sb.ToString();
-                            ViewBag.msg = errorsMappedToString;
                             
+                            string errorsMappedToString = sb.ToString();
+                            ViewBag.msg = errorsMappedToString;   
                         }
                     }
                     else
                     {
-
                         ViewBag.msg = "Top Up failed! Contact Support";
                     }
                 }
@@ -76,11 +77,11 @@ namespace Transactioneer.Controllers
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    client.BaseAddress = new Uri(baseUrl);
+                    client.BaseAddress = _baseUrl.TransactionsBaseUrl;
                     client.DefaultRequestHeaders.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-                    HttpResponseMessage res = client.PostAsJsonAsync(baseUrl + "PostTransaction", transactionDetails).Result;
+                    HttpResponseMessage res = client.PostAsJsonAsync(client.BaseAddress + "PostTransaction", transactionDetails).Result;
 
                     if (res.IsSuccessStatusCode)
                     {
@@ -103,7 +104,7 @@ namespace Transactioneer.Controllers
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ViewBag.msg = ex.Message;
             }
@@ -115,14 +116,14 @@ namespace Transactioneer.Controllers
             List<TransactionReport> allTransactionReports = new List<TransactionReport>();
             try
             {
-                
+
                 using (HttpClient client = new HttpClient())
                 {
-                    client.BaseAddress = new Uri(baseUrl);
+                    client.BaseAddress = _baseUrl.TransactionsBaseUrl;
                     client.DefaultRequestHeaders.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-                    HttpResponseMessage res = client.GetAsync(baseUrl + "GetTransactionsReport").Result;
+                    HttpResponseMessage res = client.GetAsync(client.BaseAddress + "GetTransactionsReport").Result;
 
                     if (res.IsSuccessStatusCode)
                     {
@@ -130,7 +131,7 @@ namespace Transactioneer.Controllers
                         TransactionsReportResponse transactionsReportResponse = JsonConvert.DeserializeObject<TransactionsReportResponse>(result);
                         if (transactionsReportResponse.IsSuccess)
                         {
-                            foreach(TransactionReport transactionReport in transactionsReportResponse.Result)
+                            foreach (TransactionReport transactionReport in transactionsReportResponse.Result)
                             {
                                 TransactionReport report = new TransactionReport();
 
@@ -154,13 +155,13 @@ namespace Transactioneer.Controllers
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ViewBag.msg = ex.Message;
             }
             return View(allTransactionReports);
         }
-        
-        
+
+
     }
 }

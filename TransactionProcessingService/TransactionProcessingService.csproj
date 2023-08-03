@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>dotnet-TransactionProcessingService-3e73692a-aad7-4095-b9b8-1a332e5652f4</UserSecretsId>
   </PropertyGroup>

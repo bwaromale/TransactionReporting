@@ -15,12 +15,13 @@ namespace TransactionProcessingService
                  })
                 .ConfigureServices((hostContext,services) =>
                 {
-                    var connectionString = hostContext.Configuration.GetConnectionString("DefaultSQLConnection");
-                    services.AddDbContext<TransactionProcessingContext>(
-                        options =>
-                        {
-                            options.UseSqlServer(connectionString);
-                        });
+                    //var connectionString = hostContext.Configuration.GetConnectionString("DefaultSQLConnection");
+                    //services.AddDbContext<TransactionProcessingContext>(
+                    //    options =>
+                    //    {
+                    //        options.UseSqlServer(connectionString);
+                    //    });
+                    
                     services.AddHostedService<Worker>();
                 })
                 .Build();

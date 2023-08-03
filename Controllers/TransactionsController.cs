@@ -3,6 +3,7 @@ using Grpc.Net.Client;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using System.Net;
 using System.Text;
 using TransactionProcessing.Server.Protos;
@@ -18,12 +19,15 @@ namespace TransactionReportingAPI.Controllers
     public class TransactionsController : ControllerBase
     {
         private readonly TransactionProcessingContext _db;
+        private readonly GrpcServer _grpcServer;
         private readonly SpoolPendingTransactions.SpoolPendingTransactionsClient _grpcClient;
         protected APIResponse _response = new APIResponse();
-        public TransactionsController(TransactionProcessingContext db)
+        public TransactionsController(TransactionProcessingContext db, IOptions<GrpcServer> grpcServer)
         {
             _db = db;
-            GrpcChannel channel = GrpcChannel.ForAddress("https://localhost:7105");
+            _grpcServer = grpcServer.Value;
+            
+            GrpcChannel channel = GrpcChannel.ForAddress(_grpcServer.GrpcServerHost);
             _grpcClient = new SpoolPendingTransactions.SpoolPendingTransactionsClient(channel);
         }
         [HttpGet]
@@ -51,7 +55,7 @@ namespace TransactionReportingAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<APIResponse>> GetTransactionsReport()
         {
-            var allTransactionsReport = _db.Transactions
+            var allTransactionsReport =  _db.Transactions
                                     .Select(b => new
                                     {
                                         b.TransactionId,

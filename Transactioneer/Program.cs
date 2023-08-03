@@ -1,3 +1,5 @@
+using Transactioneer.Models;
+
 namespace Transactioneer
 {
     public class Program
@@ -8,6 +10,7 @@ namespace Transactioneer
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.Configure<TransactionReportingAPIUrls>(builder.Configuration.GetSection("TransactionReportingAPIUrls"));
 
             var app = builder.Build();
 

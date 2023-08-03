@@ -8,10 +8,12 @@
 <hr />
 
 <p>
-    <button class="btn btn-success" asp-action="PostTransaction">Post Transaction</button>
+    <a asp-controller="Transactions" asp-action="PostTransaction">
+        <button class="btn btn-success" >Post Transaction</button>
+    </a>
 </p>
 <hr />
-<table class="table">
+<table id="transactionsReport" class="table">
     <thead>
         <tr>
             <th>
