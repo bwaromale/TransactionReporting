@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,8 @@ namespace TransactionProcessingService
         public ProcessPendingTransactions()
         {
             _context = new TransactionProcessingContext(new DbContextOptions<TransactionProcessingContext>());
+            
+            
         }
 
         public void Run()
@@ -28,40 +31,46 @@ namespace TransactionProcessingService
         }
         private List<Transaction> GetPendingTransations()
         {
-
             List<Transaction> pendingTransactions = new List<Transaction>();
-
-            using (HttpClient client = new HttpClient())
+            try
             {
-                client.BaseAddress = new Uri(baseUrl);
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
-                HttpResponseMessage res = client.GetAsync(baseUrl + "GetPendingTransactions").Result;
-
-                if (res.IsSuccessStatusCode)
+                using (HttpClient client = new HttpClient())
                 {
-                    var result = res.Content.ReadAsStringAsync().Result;
-                    FetchPendingObj fetchPendingResponse = JsonConvert.DeserializeObject<FetchPendingObj>(result);
+                    client.BaseAddress = new Uri(baseUrl);
+                    client.DefaultRequestHeaders.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-                    if (fetchPendingResponse.isSuccess == true)
+                    HttpResponseMessage res = client.GetAsync(baseUrl + "GetPendingTransactions").Result;
+
+                    if (res.IsSuccessStatusCode)
                     {
-                        foreach (Transaction transaction in fetchPendingResponse.result)
+                        var result = res.Content.ReadAsStringAsync().Result;
+                        FetchPendingObj fetchPendingResponse = JsonConvert.DeserializeObject<FetchPendingObj>(result);
+
+                        if (fetchPendingResponse.isSuccess == true)
                         {
-                            Transaction pendingTransaction = new Transaction();
+                            foreach (Transaction transaction in fetchPendingResponse.result)
+                            {
+                                Transaction pendingTransaction = new Transaction();
 
-                            pendingTransaction.TransactionId = transaction.TransactionId;
-                            pendingTransaction.Amount = transaction.Amount;
-                            pendingTransaction.SenderRef = transaction.SenderRef;
-                            pendingTransaction.ReceiverRef = transaction.ReceiverRef;
-                            pendingTransaction.CreateDate = transaction.CreateDate;
-                            pendingTransaction.ProcessedDate = transaction.ProcessedDate;
-                            pendingTransaction.IsCompleted = transaction.IsCompleted;
+                                pendingTransaction.TransactionId = transaction.TransactionId;
+                                pendingTransaction.Amount = transaction.Amount;
+                                pendingTransaction.SenderRef = transaction.SenderRef;
+                                pendingTransaction.ReceiverRef = transaction.ReceiverRef;
+                                pendingTransaction.CreateDate = transaction.CreateDate;
+                                pendingTransaction.ProcessedDate = transaction.ProcessedDate;
+                                pendingTransaction.IsCompleted = transaction.IsCompleted;
 
-                            pendingTransactions.Add(pendingTransaction);
+                                pendingTransactions.Add(pendingTransaction);
+                            }
                         }
                     }
                 }
+
+            }
+            catch (Exception ex)
+            {
+                LogWriter.WriteExceptionToLog($"{DateTime.Now}: Exception thrown at GetPendingTransations. Message: " +ex.Message);
             }
             return pendingTransactions;
         }
@@ -101,39 +110,51 @@ namespace TransactionProcessingService
             }
             catch(Exception ex)
             {
-                Console.WriteLine("Exception: "+ex.Message);
+                LogWriter.WriteExceptionToLog($"{DateTime.Now}: Exception thrown at ProcessPending. Message: " + ex.Message);
             }
         }
         private bool DebitSender(Customer customer, decimal amount)
         {
             bool isDebited = false;
-            //subtract amount from balance
-            decimal newBalance =  customer.Balance - amount;
-            customer.Balance = newBalance;
-
-            _context.Update(customer);
-            var saveToDb = _context.SaveChanges();
-            if(saveToDb == 1)
+            try
             {
-                isDebited = true;
+                decimal newBalance = customer.Balance - amount;
+                customer.Balance = newBalance;
+
+                _context.Update(customer);
+                var saveToDb = _context.SaveChanges();
+                if (saveToDb == 1)
+                {
+                    isDebited = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogWriter.WriteExceptionToLog($"{DateTime.Now}: Exception thrown at DebitSender. Message: " + ex.Message);
             }
             return isDebited;
         }
         private bool CreditReceiver(string receiverRef, decimal amount)
         {
             bool isCreditted =  false;
-
-            //fetch receiver
-            Customer receiver = _context.Customers.Where(r => r.CustomerRef == receiverRef).FirstOrDefault();
-            decimal newBalance = receiver.Balance + amount;
-
-            receiver.Balance = newBalance;
-            //update balace
-            _context.Update(receiver);
-            var saveToDb = _context.SaveChanges();
-            if (saveToDb == 1)
+            try
             {
-                isCreditted = true;
+                //fetch receiver
+                Customer receiver = _context.Customers.Where(r => r.CustomerRef == receiverRef).FirstOrDefault();
+                decimal newBalance = receiver.Balance + amount;
+
+                receiver.Balance = newBalance;
+                //update balace
+                _context.Update(receiver);
+                var saveToDb = _context.SaveChanges();
+                if (saveToDb == 1)
+                {
+                    isCreditted = true;
+                }
+            }
+            catch(Exception ex)
+            {
+                LogWriter.WriteExceptionToLog($"{DateTime.Now}: Exception thrown at CreditReceiver. Message: " + ex.Message);
             }
             return isCreditted;
         }
