@@ -15,12 +15,15 @@ namespace TransactionProcessingService
     public class ProcessPendingTransactions
     {
         private readonly TransactionProcessingContext _context;
-        private string baseUrl = "https://localhost:7021/api/Transactions/";
+        private readonly IConfiguration _config;
+        private static string baseUrl;
+        LogWriter _logWriter = new LogWriter();
 
         public ProcessPendingTransactions()
         {
             _context = new TransactionProcessingContext(new DbContextOptions<TransactionProcessingContext>());
-            
+            _config = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
+            baseUrl = _config["AppSettings:FetchPendingBaseUrl"];
             
         }
 
@@ -70,7 +73,7 @@ namespace TransactionProcessingService
             }
             catch (Exception ex)
             {
-                LogWriter.WriteExceptionToLog($"{DateTime.Now}: Exception thrown at GetPendingTransations. Message: " +ex.Message);
+                _logWriter.WriteExceptionToLog($"{DateTime.Now}: Exception thrown at GetPendingTransations. Message: " +ex.Message);
             }
             return pendingTransactions;
         }
@@ -110,7 +113,7 @@ namespace TransactionProcessingService
             }
             catch(Exception ex)
             {
-                LogWriter.WriteExceptionToLog($"{DateTime.Now}: Exception thrown at ProcessPending. Message: " + ex.Message);
+                _logWriter.WriteExceptionToLog($"{DateTime.Now}: Exception thrown at ProcessPending. Message: " + ex.Message);
             }
         }
         private bool DebitSender(Customer customer, decimal amount)
@@ -130,7 +133,7 @@ namespace TransactionProcessingService
             }
             catch (Exception ex)
             {
-                LogWriter.WriteExceptionToLog($"{DateTime.Now}: Exception thrown at DebitSender. Message: " + ex.Message);
+                _logWriter.WriteExceptionToLog($"{DateTime.Now}: Exception thrown at DebitSender. Message: " + ex.Message);
             }
             return isDebited;
         }
@@ -154,7 +157,7 @@ namespace TransactionProcessingService
             }
             catch(Exception ex)
             {
-                LogWriter.WriteExceptionToLog($"{DateTime.Now}: Exception thrown at CreditReceiver. Message: " + ex.Message);
+                _logWriter.WriteExceptionToLog($"{DateTime.Now}: Exception thrown at CreditReceiver. Message: " + ex.Message);
             }
             return isCreditted;
         }

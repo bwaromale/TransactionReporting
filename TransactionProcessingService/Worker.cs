@@ -6,12 +6,12 @@ namespace TransactionProcessingService
 {
     public class Worker : BackgroundService
     {
+        LogWriter _logWriter = new();
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                //_logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                LogWriter.WriteToLog($"Worker running at: {DateTimeOffset.Now}");
+                _logWriter.WriteToLog($"Worker running at: {DateTimeOffset.Now}");
                 ProcessPendingTransactions processPending = new();
                 processPending.Run();
                 await Task.Delay(1000, stoppingToken);
