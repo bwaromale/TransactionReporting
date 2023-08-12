@@ -13,11 +13,13 @@ namespace TransactionReportingAPI.Services
     {
         private readonly GrpcServer _grpcServer;
         private readonly TransactionProcessingContext _db;
+        private readonly ILogger<Transactions> _logger;
         private readonly SpoolPendingTransactions.SpoolPendingTransactionsClient _grpcClient;
 
-        public Transactions(TransactionProcessingContext db, IOptions<GrpcServer> grpcServer)
+        public Transactions(TransactionProcessingContext db, IOptions<GrpcServer> grpcServer, ILogger<Transactions> logger)
         {
             _db = db;
+            _logger = logger;
             _grpcServer = grpcServer.Value;
 
             GrpcChannel channel = GrpcChannel.ForAddress(_grpcServer.GrpcServerHost);
@@ -44,7 +46,7 @@ namespace TransactionReportingAPI.Services
             }
             catch (Exception ex)
             {
-
+                _logger.LogError(DateTime.Now+ ": Exception at GetPendingTransactions. Message: " + ex.Message);
             }
             return transactions;
         }
@@ -79,7 +81,7 @@ namespace TransactionReportingAPI.Services
             }
             catch(Exception ex)
             {
-
+                _logger.LogError(DateTime.Now + ": Exception at GetTransactionsReport. Message: " + ex.Message);
             }
             return allTransactionsReport;
         }
@@ -103,7 +105,7 @@ namespace TransactionReportingAPI.Services
             }
             catch(Exception ex)
             {
-
+                _logger.LogError(DateTime.Now + ": Exception at PostTransactionToLog. Message: " + ex.Message);
             }
             return newTransaction;
         }
@@ -125,7 +127,7 @@ namespace TransactionReportingAPI.Services
             }
             catch(Exception ex)
             {
-
+                _logger.LogError(DateTime.Now + ": Exception at TopUpBalance. Message: " + ex.Message);
             }
             return isSuccessful;
         }
@@ -133,25 +135,37 @@ namespace TransactionReportingAPI.Services
         public bool VerifyAccountBalance(string senderRef, decimal transAmount)
         {
             bool isSufficient = false;
-            var sender = _db.Customers.Where(s => s.CustomerRef == senderRef && s.Balance >= transAmount).FirstOrDefault();
-            if (sender != null)
+            try
             {
-                isSufficient = true;
+                var sender = _db.Customers.Where(s => s.CustomerRef == senderRef && s.Balance >= transAmount).FirstOrDefault();
+                if (sender != null)
+                {
+                    isSufficient = true;
+                }
             }
-
+            catch(Exception ex)
+            {
+                _logger.LogError(DateTime.Now + ": Exception at VerifyAccountBalance. Message: " + ex.Message);
+            }
             return isSufficient;
         }
 
         public bool VerifyReference(string customerRef)
         {
             bool isExist = false;
-            var verify =  _db.Customers.Where(v => v.CustomerRef == customerRef).FirstOrDefault();
-
-            if (verify != null)
+            try
             {
-                isExist = true;
-            }
+                var verify = _db.Customers.Where(v => v.CustomerRef == customerRef).FirstOrDefault();
 
+                if (verify != null)
+                {
+                    isExist = true;
+                }
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(DateTime.Now + ": Exception at VerifyReference. Message: " + ex.Message);
+            }
             return isExist;
         }
     }

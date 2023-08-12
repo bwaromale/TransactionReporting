@@ -31,7 +31,7 @@ namespace TransactionProcessing.Server.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);
+                _logger.LogError(DateTime.Now+ ": Exception at FetchTransactions. Message" + ex.Message);
             }
         }
         private Transaction MapTransactionToProto(ModelTransaction transaction)

@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using TransactionReportingAPI.Data;
-using AutoMapper;
 using TransactionReportingAPI.Models;
 using TransactionReportingAPI.Services;
 
@@ -17,7 +17,12 @@ builder.Services.AddDbContext<TransactionProcessingContext>(
     );
 builder.Services.Configure<GrpcServer>(builder.Configuration.GetSection("GrpcServer"));
 builder.Services.AddScoped<ITransactions, Transactions>();
-//builder.Services.AddAutoMapper(typeof(MappingConfig));
+builder.Host.UseSerilog((hostContext, configuration) =>
+{
+    configuration
+        .ReadFrom.Configuration(hostContext.Configuration);
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -27,7 +32,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 app.UseSwagger();
 app.UseSwaggerUI();
-
+app.UseSerilogRequestLogging();
 
 app.UseHttpsRedirection();
 

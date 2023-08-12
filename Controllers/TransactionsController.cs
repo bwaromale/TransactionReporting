@@ -12,15 +12,11 @@ namespace TransactionReportingAPI.Controllers
     [ApiController]
     public class TransactionsController : ControllerBase
     {
-        private readonly TransactionProcessingContext _db;
         private readonly ITransactions _transactionsService;
         protected APIResponse _response = new();
-        public TransactionsController(TransactionProcessingContext db, ITransactions transactionsService)
+        public TransactionsController(ITransactions transactionsService)
         {
-            _db = db;
-            
             _transactionsService = transactionsService;
-
         }
         [HttpGet]
         public async Task<ActionResult<APIResponse>> GetPendingTransactions()
