@@ -94,7 +94,16 @@ namespace Transactioneer.Controllers
                         }
                         else
                         {
-                            ViewBag.msg = postTransactionResponse.ErrorMessages.ToString();
+                            string[] errors = postTransactionResponse.ErrorMessages;
+                            StringBuilder sb = new StringBuilder();
+                            foreach (string error in errors)
+                            {
+                                sb.Append(error);
+                                sb.Append("\n");
+                            }
+
+                            string errorsMappedToString = sb.ToString();
+                            ViewBag.msg = errorsMappedToString;
                             ModelState.Clear();
                         }
                     }
