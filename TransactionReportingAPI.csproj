@@ -57,6 +57,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="TransactionProcessing.Server\TransactionProcessing.Server.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Protobuf Include="Protos\SpoolPendingTransactions.proto" GrpcServices="Client" />
   </ItemGroup>
 

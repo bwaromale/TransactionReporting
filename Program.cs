@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using TransactionReportingAPI.Data;
 using AutoMapper;
 using TransactionReportingAPI.Models;
+using TransactionReportingAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,7 @@ builder.Services.AddDbContext<TransactionProcessingContext>(
     }
     );
 builder.Services.Configure<GrpcServer>(builder.Configuration.GetSection("GrpcServer"));
+builder.Services.AddScoped<ITransactions, Transactions>();
 //builder.Services.AddAutoMapper(typeof(MappingConfig));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

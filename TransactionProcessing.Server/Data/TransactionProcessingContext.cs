@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TransactionReportingAPI.Models;
+using TransactionProcessing.Server.Models;
 
-namespace TransactionReportingAPI.Data
+namespace TransactionProcessing.Server.Data
 {
     public class TransactionProcessingContext: DbContext
     {

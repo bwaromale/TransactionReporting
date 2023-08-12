@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TransactionReportingAPI.Models;
-using Transaction = TransactionReportingAPI.Models.Transaction;
+using TransactionProcessingService.Models;
 
 namespace TransactionProcessingService.Data
 {

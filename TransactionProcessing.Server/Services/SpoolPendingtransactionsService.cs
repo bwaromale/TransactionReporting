@@ -2,10 +2,9 @@
 using Grpc.Core;
 using Microsoft.EntityFrameworkCore;
 using TransactionProcessing.Server.Protos;
-using TransactionReportingAPI.Data;
-using TransactionReportingAPI.Models;
 using Transaction = TransactionProcessing.Server.Protos.Transaction;
-using ModelTransaction = TransactionReportingAPI.Models.Transaction;
+using ModelTransaction = TransactionProcessing.Server.Models.Transaction;
+using TransactionProcessing.Server.Data;
 
 namespace TransactionProcessing.Server.Services
 {

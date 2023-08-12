@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TransactionReportingAPI.Models
+namespace TransactionProcessing.Server.Models
 {
     public class Transaction
     {

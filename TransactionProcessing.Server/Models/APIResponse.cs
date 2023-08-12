@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace TransactionReportingAPI.Models
+namespace TransactionProcessing.Server.Models
 {
     public class APIResponse
     {
