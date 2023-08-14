@@ -104,7 +104,6 @@ namespace Transactioneer.Controllers
 
                             string errorsMappedToString = sb.ToString();
                             ViewBag.msg = errorsMappedToString;
-                            ModelState.Clear();
                         }
                     }
                     else

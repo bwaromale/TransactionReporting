@@ -72,11 +72,18 @@ namespace TransactionReportingAPI.Controllers
         public ActionResult<APIResponse> PostTransaction(TransactionPostingDetails details)
         {
             
-                if (details == null || details.Amount == 0)
+                if (details == null || details.Amount <= 0)
                 {
                     _response.IsSuccess = false;
                     _response.ResponseCode = "01";
                     _response.ErrorMessages.Add("Details provided are not supported for processing by System. Kindly review!");
+                    return _response;
+                }
+                if(details.SenderRef == details.ReceiverRef)
+                {
+                    _response.IsSuccess = false;
+                    _response.ResponseCode = "01";
+                    _response.ErrorMessages.Add("Sender and receiver cannot be thesame person. Kindly review!");
                     return _response;
                 }
                 bool senderRefOk = _transactionsService.VerifyReference(details.SenderRef);
