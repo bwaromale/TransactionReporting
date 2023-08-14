@@ -23,7 +23,7 @@ namespace TransactionReportingAPI.Controllers
         {
             List<Transaction> transactions = await _transactionsService.GetPendingTransactions();
 
-            _response.StatusCode = HttpStatusCode.OK;
+            _response.ResponseCode = "00";
             _response.Result = transactions;
             return _response;
         }
@@ -32,7 +32,7 @@ namespace TransactionReportingAPI.Controllers
         {
             var allTransactionsReport = await _transactionsService.GetTransactionsReport();
 
-            _response.StatusCode = HttpStatusCode.OK;
+            _response.ResponseCode = "00";
             _response.Result = allTransactionsReport;
             return _response;
         }
@@ -42,7 +42,7 @@ namespace TransactionReportingAPI.Controllers
             if (topUpDetails.CustomerRef == null || topUpDetails.Amount == 0)
             {
                 _response.IsSuccess = false;
-                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.ResponseCode = "01";
                 _response.ErrorMessages.Add("Invalid top up request. Review details!");
                 return _response;
             }
@@ -51,7 +51,7 @@ namespace TransactionReportingAPI.Controllers
             if (!customerExist)
             {
                 _response.IsSuccess = false;
-                _response.StatusCode = HttpStatusCode.NotFound;
+                _response.ResponseCode = "01";
                 _response.ErrorMessages.Add($"Customer reference '{topUpDetails.CustomerRef}' provided for Top Up  is invalid");
                 return _response;
             }
@@ -60,11 +60,11 @@ namespace TransactionReportingAPI.Controllers
             if(!topUp)
             {
                 _response.IsSuccess = false;
-                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.ResponseCode = "01";
                 _response.ErrorMessages.Add($"Error: Couldn't update balance for {topUpDetails.CustomerRef}. Contact Support");
                 return _response;
             }
-            _response.StatusCode = HttpStatusCode.OK;
+            _response.ResponseCode = "00";
             _response.Result = "Top up sucessful!";
             return _response;
         }
@@ -75,7 +75,7 @@ namespace TransactionReportingAPI.Controllers
                 if (details == null || details.Amount == 0)
                 {
                     _response.IsSuccess = false;
-                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    _response.ResponseCode = "01";
                     _response.ErrorMessages.Add("Details provided are not supported for processing by System. Kindly review!");
                     return _response;
                 }
@@ -86,7 +86,7 @@ namespace TransactionReportingAPI.Controllers
                     string forSenderRefOk = senderRefOk ? "Sender Reference Verified" : "Sender Reference does not exist";
                     string forReceiverRefOk = receiverRefOk ? "Receiver Reference Verified" : "Receiver Reference does not exist";
                     _response.IsSuccess=false;
-                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    _response.ResponseCode = "01";
                     _response.ErrorMessages.Add(forSenderRefOk);
                     _response.ErrorMessages.Add(forReceiverRefOk);
                     return _response;
@@ -96,7 +96,7 @@ namespace TransactionReportingAPI.Controllers
                 if (!isBalanceSufficient)
                 {
                     _response.IsSuccess = false;
-                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    _response.ResponseCode = "01";
                     _response.ErrorMessages.Add("Your balance is lower than the amount you are sending! Kindly top up your balance!");
                     return _response;
                 }
@@ -105,12 +105,12 @@ namespace TransactionReportingAPI.Controllers
                 if (postedTransaction == null)
                 {
                     _response.IsSuccess = false;
-                    _response.StatusCode=HttpStatusCode.BadRequest;
+                    _response.ResponseCode="01";
                     _response.ErrorMessages.Add("An error occured while posting this transaction! Contact support");
                     return _response;
                 }
 
-                _response.StatusCode = HttpStatusCode.OK;
+                _response.ResponseCode = "00";
                 _response.Result = postedTransaction;
                 return _response;
         }

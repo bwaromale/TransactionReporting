@@ -61,6 +61,10 @@ namespace TransactionProcessingService
                             }
                         }
                     }
+                    else
+                    {
+                        _logWriter.WriteToLog($"{DateTime.Now}: GetPendingTransations API did not return success");
+                    }
                 }
 
             }
